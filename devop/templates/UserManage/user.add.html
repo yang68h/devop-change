@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+    添加用户
+{% endblock %}
+
+{% block content %}
+    <h1>添加新帐号</h1>
+    <hr/>
+
+    <form class="form-horizontal" role="form" action={% url "adduserurl" %} method="post">
+        {% csrf_token %}
+
+        {% for item in form %}
+            <div class="form-group">
+                <label class="control-label col-md-1">{{ item.label }}</label>
+                {% if item.label == "权限" %}
+                    <div class="col-md-11">{{ item }}</div>
+                {% else %}
+                    <div class="col-md-2">{{ item }}</div>
+                {% endif %}
+
+                <div class="col-md-offset-1 col-md-10">
+                    {{ item.errors }}
+                </div>
+            </div>
+
+        {% endfor %}
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <button type="submit" class="btn btn-success btn-sm">新增</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        var demo1 = $('select[name="permission"]').bootstrapDualListbox({
+            nonSelectedListLabel: '可选择权限',
+            selectedListLabel: '已选择权限',
+            preserveSelectionOnMove: 'moved',
+            moveOnSelect: false
+        });
+    </script>
+{% endblock %}
